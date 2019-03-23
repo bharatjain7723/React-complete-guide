@@ -3,7 +3,7 @@ import Radium from 'radium';
 
 import './Person.css'
 
-const person = (props) => {
+const person = (props) => {    
     return (
         <div className="Person">
             <p onClick={props.click}>I'm {props.name}!! I am {props.age} years old</p>
