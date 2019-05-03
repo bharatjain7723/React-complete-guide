@@ -2,17 +2,39 @@ import React, { Component } from 'react';
 import './App.css';
 import Radium from 'radium'
 import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
 
-  state = {
-    persons: [
-      { id:"1", name: "Bharat", age: 22},
-      { id:"2", name: "Harshit", age: 23},
-      { id:"3", name: "Prachi", age: 21}
-    ],
-    otherStates: 'some other value'
+  constructor(props){
+    super(props);
+    this.state = {
+      persons: [
+        { id:"1", name: "Bharat", age: 22},
+        { id:"2", name: "Harshit", age: 23},
+        { id:"3", name: "Prachi", age: 21}
+      ],
+      otherStates: 'some other value'
+    }
+    console.log("[App.js] inside constructor");
   }
+
+  componentWillMount(){
+    console.log("[App.js] inside componentWillMount");
+  }
+
+  componentDidMount(){
+    console.log("[App.js] inside componentDidMount");
+  }
+
+  // state = {
+  //   persons: [
+  //     { id:"1", name: "Bharat", age: 22},
+  //     { id:"2", name: "Harshit", age: 23},
+  //     { id:"3", name: "Prachi", age: 21}
+  //   ],
+  //   otherStates: 'some other value'
+  // }
 
   switchNameHandler = (newName) => {
     // console.log('Was Clicked !!');
@@ -71,7 +93,7 @@ class App extends Component {
   }
 
   render() {
-
+    console.log("[App.js] inside render");
     const style = {
       backgroundColor: "green",
       color: "white", 
@@ -88,37 +110,22 @@ class App extends Component {
     let persons = null;
 
     if(this.state.showPersons){      
-      persons = (
-        <div> 
-          <Persons
+      persons = <Persons
             persons = {this.state.persons}
             clicked = {this.deletePersonHandler}
             changed = {this.nameChangeHandler} />
-        </div>
-      )
-
-      style.backgroundColor = "red";
-    }
-
-    let classes = [];
-
-    if(this.state.persons.length <= 2){
-      classes.push('red'); // classes = ['red];
-    }
-
-    if(this.state.persons.length <= 1){
-      classes.push('bold'); // classes = ['red', 'bold'];
     }
 
     return (
       <div className="App">
-        <h1>Hi, I'm Bharat</h1>
-        <p className={classes.join(' ')}>This is really working!</p>
-        <button 
-         onClick={()=>this.switchNameHandler("Bharat Jain")}>Switch Here</button>
-         <button 
-         style={style}
-         onClick={this.togglePersonsHandler}>Toggle Persons</button>
+        <Cockpit
+        appTitle = {this.props.title}
+        showPersons = {this.state.showPersons}
+        style = {style}
+        persons = {this.state.persons}
+        clicked = {this.togglePersonsHandler}
+        switch={this.switchNameHandler}
+        />
         {persons}
       </div>
     );
